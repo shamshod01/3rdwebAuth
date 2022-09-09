@@ -15,11 +15,24 @@ const LoginComponent: React.FC = () => {
             setIsLoggedIn(true)
             router.push("/balance")
         }
-    },[address])
+    },[address, isLoggedIn])
+
+    function isMobileDevice() {
+        return 'ontouchstart' in window || 'onmsgesturechange' in window;
+    }
+
+    const handleLogin = async () => {
+        const dappUrl = "shamshod.com";
+        const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
+        if(isMobileDevice()){
+            window.location.href = metamaskAppDeepLink
+        }
+        await connectWallet("injected")
+    };
 
     return <div className="h-screen flex grid justify-center content-center bg-gray-900">
         <button className="bg-yellow-600 max-h-10 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
-                onClick={()=>connectWallet("injected")}
+                onClick={handleLogin}
         >
             Connect Wallet
         </button>
